@@ -834,3 +834,159 @@ html {
 .skill-category:hover {
     animation: glow 2s ease-in-out infinite;
 }
+
+/* ========================================
+   SECTION MINDSET - DESIGN HARMONISÉ
+   ======================================== */
+
+.mindset-section {
+    background: rgba(160, 82, 45, 0.02);
+    position: relative;
+}
+
+.mindset-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #A0522D, transparent);
+    opacity: 0.3;
+}
+
+.mindset-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+    margin-top: 5rem;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mindset-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 2px solid rgba(160, 82, 45, 0.3);
+    padding: 3rem;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+}
+
+.mindset-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(160, 82, 45, 0.1), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.mindset-card:hover::before {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.mindset-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, transparent, rgba(160, 82, 45, 0.05));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.mindset-card:hover::after {
+    opacity: 1;
+}
+
+.mindset-card:hover {
+    border-color: #A0522D;
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 25px 60px rgba(160, 82, 45, 0.4);
+}
+
+.mindset-card i {
+    font-size: 3.5rem;
+    margin-bottom: 2rem;
+    color: #A0522D;
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    display: block;
+    position: relative;
+    z-index: 2;
+}
+
+.mindset-card:hover i {
+    transform: scale(1.25) rotate(-8deg);
+    filter: drop-shadow(0 0 25px rgba(160, 82, 45, 0.8));
+    color: #D2691E;
+}
+
+.mindset-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+    position: relative;
+    padding-bottom: 1rem;
+    z-index: 2;
+}
+
+.mindset-card h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(90deg, #A0522D, #D2691E);
+    box-shadow: 0 0 10px rgba(160, 82, 45, 0.5);
+    transition: width 0.4s ease;
+}
+
+.mindset-card:hover h3::after {
+    width: 100%;
+}
+
+.mindset-card p {
+    color: #cccccc;
+    font-size: 0.95rem;
+    line-height: 1.9;
+    position: relative;
+    z-index: 2;
+}
+
+.mindset-card strong {
+    color: #A0522D;
+    font-weight: 700;
+    position: relative;
+}
+
+.mindset-card strong::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, #A0522D, transparent);
+    opacity: 0.5;
+}
+
+/* Responsive pour Mindset */
+@media (max-width: 968px) {
+    .mindset-grid {
+        grid-template-columns: 1fr;
+    }
+}
