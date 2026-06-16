@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carnet · Jonathan Godwin Bakeloula</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F7F5F0;
+    --paper-warm: #F1ECE2;
+    --ink: #1A1820;
+    --ink-dim: #5C5950;
+    --ink-faint: #948F82;
+    --rule: #D9D4C8;
+    --accent: #5B7A6D;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Source Serif 4', serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+  article.entry a { text-decoration: underline; text-decoration-color: rgba(91,122,109,0.35); }
+
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 26px 48px;
+    background: rgba(247, 245, 240, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--rule);
+  }
+  nav .back {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--ink-dim);
+  }
+  nav .back:hover { color: var(--accent); }
+  nav .back .idx { color: var(--accent); margin-right: 2px; }
+  nav .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  nav .tag .idx { color: var(--accent); margin-right: 6px; }
+
+  @media (max-width: 640px) { nav { padding: 24px; } }
+
+  header.intro {
+    padding: 160px 48px 80px;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  header.intro .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    color: var(--accent);
+    margin-bottom: 24px;
+  }
+  .idx {
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--accent);
+  }
+  .cursor {
+    display: inline-block;
+    color: var(--accent);
+    animation: blink 1.1s steps(2) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .cursor { animation: none; } }
+  header.intro h1 {
+    font-weight: 400;
+    font-size: clamp(34px, 5.5vw, 54px);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+  header.intro h1 em { font-style: italic; color: var(--accent); }
+  header.intro p {
+    margin-top: 28px;
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--ink-dim);
+    max-width: 600px;
+  }
+
+  @media (max-width: 640px) { header.intro { padding: 60px 24px 56px; } }
+
+  .index {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 48px 60px;
+  }
+  .index-list { border-top: 1px solid var(--rule); }
+  .index-item {
+    display: block;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .index-item .num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+  .index-item h3 {
+    font-size: 21px;
+    font-weight: 500;
+    margin-top: 8px;
+    transition: color 0.2s;
+  }
+  .index-item:hover h3 { color: var(--accent); }
+  .index-item .meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    margin-top: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 640px) { .index { padding: 0 24px 40px; } }
+
+  article.entry {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 70px 48px 120px;
+    border-top: 1px solid var(--rule);
+  }
+  article.entry .entry-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+    margin-bottom: 18px;
+  }
+  article.entry h2 {
+    font-size: clamp(26px, 4vw, 36px);
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 36px;
+  }
+  article.entry h3 {
+    font-size: 19px;
+    font-weight: 600;
+    margin: 40px 0 16px;
+  }
+  article.entry p {
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--ink);
+    margin-bottom: 20px;
+  }
+  article.entry p.lede {
+    font-size: 19px;
+    font-style: italic;
+    color: var(--ink-dim);
+    margin-bottom: 36px;
+    border-left: 2px solid var(--accent);
+    padding-left: 22px;
+  }
+  article.entry strong { font-weight: 600; }
+  article.entry .question {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  @media (max-width: 640px) { article.entry { padding: 48px 24px 80px; } }
+
+  .back-to-top {
+    text-align: center;
+    padding: 0 48px 100px;
+  }
+  .back-to-top a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-dim);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 4px;
+  }
+
+  footer.simple {
+    border-top: 1px solid var(--rule);
+    padding: 40px 48px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    color: var(--ink-faint);
+  }
+
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="back"><span class="idx">[ 0 ]</span>← Retour au profil</a>
+  <span class="tag"><span class="idx">[ 6 ]</span>Carnet personnel</span>
+</nav>
+
+<header class="intro">
+  <div class="eyebrow mono">$ cat carnet.md<span class="cursor">_</span></div>
+  <h1>Des questions que je <em>creuse</em>, pas toujours que je résous.</h1>
+  <p>Quelques textes et interrogations sur l'identité, la décision sous incertitude, et ce qu'une génération critique du capitalisme reproduit sans le voir. Rien de définitif : des points d'étape dans une réflexion en cours.</p>
+</header>
+
+<div class="index">
+  <div class="index-list">
+    <a href="#identite" class="index-item">
+      <div class="num">[ 01 ]</div>
+      <h3>Appropriation critique d'une identité plurielle</h3>
+      <div class="meta">Identité · Héritage colonial · Pan-africanisme</div>
+    </a>
+    <a href="#incertitude" class="index-item">
+      <div class="num">[ 02 ]</div>
+      <h3>Nos outils de décision face à l'incertain</h3>
+      <div class="meta">Décision · Data science · Question ouverte</div>
+    </a>
+    <a href="#capitalisme" class="index-item">
+      <div class="num">[ 03 ]</div>
+      <h3>Une génération critique qui s'ignore</h3>
+      <div class="meta">Capitalisme · Contradiction · Question ouverte</div>
+    </a>
+  </div>
+</div>
+
+<!-- ENTRY 1 -->
+<article class="entry" id="identite">
+  <div class="entry-eyebrow">[ 01 ] · Identité</div>
+  <h2>Appropriation critique d'une identité plurielle</h2>
+  <p class="lede">Suis-je d'abord congolais avant d'être chrétien, ou est-ce l'inverse ? J'ai longtemps considéré cette question comme centrale ; je la trouve aujourd'hui maladroite.</p>
+
+  <p>Elle a une origine nette : le christianisme, élément majeur de l'héritage colonial, et le besoin de s'en défaire pour penser le développement de l'Afrique à l'africaine. Mais la frontière entre valeurs religieuses et valeurs nationales est poreuse : dans un environnement où la religion est constitutive de la culture, l'une façonne l'autre, et inversement.</p>
+
+  <h3>L'échec du rejet total</h3>
+  <p>Si je rejette le christianisme parce qu'il est colonial, je dois rejeter aussi le français dans lequel je formule ce rejet. Alors l'État congolais lui-même, qui n'existe que par la carte coloniale. Alors l'école, la médecine moderne, les infrastructures. Au bout de ce raisonnement, il ne reste rien, ou plutôt il reste la fiction d'une pureté pré-coloniale qui n'a jamais existé.</p>
+  <p>Le panafricanisme appliqué à la lettre conduit à une vision idéalisée et simplifiée de l'identité africaine, qui occulte sa complexité historique.</p>
+
+  <h3>L'appropriation critique comme alternative</h3>
+  <p>Ce qui compte n'est peut-être pas de rejeter totalement l'héritage colonial, mais d'apprendre à composer avec : construire une identité qui jongle entre traditions et modernité, sans en ignorer les phases douloureuses. Amin Maalouf le dit autrement dans <em>Identités meurtrières</em> : l'identité est faite d'appartenances multiples.</p>
+  <p>Une appropriation critique de ma religion, par exemple, signifie reconnaître qu'elle m'a été transmise dans un cadre colonial violent, tout en voyant qu'elle a depuis été réappropriée, métissée par des générations de Congolais qui l'ont habitée de significations qui ne sont plus celles des missionnaires. Je peux la pratiquer en connaissant son histoire, sans choisir entre adhésion naïve et rejet total : <strong>débinariser</strong> l'appartenance.</p>
+
+  <h3>L'objection que je ne rejette pas</h3>
+  <p>On pourrait m'objecter que l'appropriation critique est une posture confortable pour qui vit en diaspora : garder les bénéfices de la modernité occidentale tout en se donnant une virginité critique. L'objection est sérieuse, je la reconnais. Mais le rejet radical, poussé jusqu'au bout, est lui-même impraticable : personne ne vit selon ses propres termes, pas même ceux qui le prônent.</p>
+  <p>La vraie question n'est donc pas de choisir entre le confort de la critique et la pureté du rejet, mais d'assumer une position pragmatique qui reconnaît ses propres limites.</p>
+</article>
+
+<!-- ENTRY 2 -->
+<article class="entry" id="incertitude">
+  <div class="entry-eyebrow">[ 02 ] · Décision · Question ouverte</div>
+  <h2>Nos outils de décision face à l'incertain</h2>
+  <p class="lede">2008, 2019, la guerre russo-ukrainienne : l'incertitude structurelle de notre époque rend-elle obsolètes nos outils de prise de décision ?</p>
+
+  <p>La plupart de ces outils (analyse de données historiques, modélisation prédictive) et les métiers qui s'y rattachent (data science, analyse prédictive, business intelligence) reposent sur un principe implicite : <span class="question">le futur ressemble au passé suffisamment pour qu'on puisse l'anticiper à partir de lui.</span> Cette hypothèse tient de moins en moins.</p>
+
+  <p>Deux questions me semblent rester ouvertes, sans réponse simple :</p>
+  <p><strong>Faut-il remettre en question ces outils</strong>, ou seulement la confiance qu'on leur accorde dans des contextes où ils n'ont jamais été conçus pour fonctionner ?</p>
+  <p><strong>Si une refonte est nécessaire</strong>, comment repenser la prise de décision dans les entreprises, les gouvernements, les institutions, pour intégrer l'incertitude structurelle plutôt que de l'occulter derrière un intervalle de confiance ?</p>
+
+  <p>Je n'ai pas de réponse arrêtée. C'est une question que je veux creuser davantage, probablement à la croisée de ce que j'apprends en statistique et de ce que je vois se jouer dans les métiers de la décision.</p>
+</article>
+
+<!-- ENTRY 3 -->
+<article class="entry" id="capitalisme">
+  <div class="entry-eyebrow">[ 03 ] · Contradiction · Question ouverte</div>
+  <h2>Une génération critique qui s'ignore</h2>
+  <p class="lede">Comment une génération qui se perçoit comme critique du capitalisme en reproduit intérieurement les logiques les plus avancées, et pourquoi elle ne le voit pas ?</p>
+
+  <p>C'est une question que je n'ai pas encore développée en profondeur, mais qui me semble féconde. L'hypothèse de départ : la critique du capitalisme la plus visible aujourd'hui (sur le travail, la consommation, l'attention) coexiste souvent avec des comportements qui en intériorisent les logiques les plus poussées : optimisation permanente de soi, compétition pour la visibilité, marchandisation de l'authenticité.</p>
+
+  <p>Ce n'est pas une accusation d'hypocrisie ; ce serait trop simple, et probablement faux. C'est plus une question sur les <strong>angles morts</strong> : pourquoi certaines logiques sont plus visibles à critiquer (la publicité, la grande entreprise) que d'autres, plus diffuses, qu'on a fini par confondre avec sa propre subjectivité.</p>
+
+  <p>Question ouverte, à suivre.</p>
+</article>
+
+<div class="back-to-top">
+  <a href="#">↑ Haut de page</a>
+</div>
+
+<footer class="simple">
+  <span>Jonathan Godwin Bakeloula</span>
+  <span>dernière entrée : juin 2026</span>
+  <span>bakeloulajg@gmail.com</span>
+</footer>
+
+</body>
+</html>
