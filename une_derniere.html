@@ -242,7 +242,7 @@
 <div class="sparks" id="sparks"></div>
 <div class="glow"></div>
 
-<div class="card">
+<div class="card" id="askCard">
   <div class="eyebrow">Avant de partir</div>
   <h1>Une dernière fois, <span class="name">Norie-Lyne</span>, avant que je m'en aille ?</h1>
   <p class="lead">Rien de compliqué. Juste toi, moi, et une soirée à Lille, une dernière fois avant mon départ.</p>
@@ -270,6 +270,8 @@
 
 <script>
   const STORAGE_KEY = 'dernier-tour-reponse';
+  // Canal ntfy.sh privé. Change-le pour un nom unique et difficile à deviner si tu veux plus de discrétion.
+  const NTFY_TOPIC = 'dernier-tour-norielyne-8k2q';
 
   const sparksContainer = document.getElementById('sparks');
   for(let i=0;i<50;i++){
@@ -295,40 +297,42 @@
 
     document.getElementById('btnRow').style.display = 'none';
 
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      answer: yes ? 'oui' : 'non',
+      date: new Date().toISOString()
+    }));
+
     try{
-      await window.storage.set(STORAGE_KEY, JSON.stringify({
-        answer: yes ? 'oui' : 'non',
-        date: new Date().toISOString()
-      }), true);
+      await fetch(`https://ntfy.sh/${NTFY_TOPIC}`, {
+        method: 'POST',
+        body: yes ? 'Norie-Lyne a répondu oui.' : 'Norie-Lyne a répondu non.'
+      });
     }catch(e){
-      console.error('Storage error:', e);
+      console.error('Notification error:', e);
     }
   }
 
-  async function checkExistingResponse(){
-    try{
-      const result = await window.storage.get(STORAGE_KEY, true);
-      if(result && result.value){
-        const data = JSON.parse(result.value);
-        const el = document.getElementById('already');
-        const d = new Date(data.date);
-        const formatted = d.toLocaleDateString('fr-FR', {day:'numeric', month:'long', hour:'2-digit', minute:'2-digit'});
-        el.style.display = 'block';
-        el.textContent = data.answer === 'oui'
-          ? `Réponse enregistrée : oui, le ${formatted}`
-          : `Réponse enregistrée : non, le ${formatted}`;
+  function checkExistingResponse(){
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw){
+      const data = JSON.parse(raw);
+      const el = document.getElementById('already');
+      const d = new Date(data.date);
+      const formatted = d.toLocaleDateString('fr-FR', {day:'numeric', month:'long', hour:'2-digit', minute:'2-digit'});
+      el.style.display = 'block';
+      el.textContent = data.answer === 'oui'
+        ? `Réponse enregistrée : oui, le ${formatted}`
+        : `Réponse enregistrée : non, le ${formatted}`;
 
-        document.getElementById('btnRow').style.display = 'none';
-        const respEl = document.getElementById('response');
-        respEl.textContent = data.answer === 'oui'
-          ? "Elle a dit oui."
-          : "Elle a décliné.";
-        respEl.classList.add('show');
-      }
-    }catch(e){
-      // pas encore de réponse enregistrée
+      document.getElementById('btnRow').style.display = 'none';
+      const respEl = document.getElementById('response');
+      respEl.textContent = data.answer === 'oui'
+        ? "Elle a dit oui."
+        : "Elle a décliné.";
+      respEl.classList.add('show');
     }
   }
+
   checkExistingResponse();
 
   function launchConfetti(){
